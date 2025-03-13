@@ -1,203 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Air Corps Anniversary</title>
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      height: 100vh;
-      margin: 0;
-      padding: 40px 20px;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom, #0a3463, #1a4563);
-      overflow: hidden;
-    }
-    
-    .heading {
-      text-align: center;
-      color: white;
-      margin-bottom: 40px;
-    }
-    
-    h1 {
-      font-size: 50px;
-      margin: 0;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-      letter-spacing: 2px;
-    }
-    
-    .logo {
-      margin: 20px 0 40px 0;
-      text-align: center;
-    }
-    
-    .logo img {
-      width: 150px;
-      height: auto;
-      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
-      transition: transform 0.3s ease;
-    }
-    
-    .logo img:hover {
-      transform: scale(1.05);
-    }
-    
-    .button-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-grow: 1;
-      margin: 40px 0;
-    }
-    
-    .button {
-      width: 300px;
-      height: 300px;
-      background-color: #ADD8E6;
-      color: #0a3463;
-      border: none;
-      border-radius: 50%;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-      text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 
-                  inset 0 -5px 10px rgba(0, 0, 0, 0.1),
-                  0 0 30px rgba(173, 216, 230, 0.4);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      letter-spacing: 1px;
-    }
-    
-    .button:hover {
-      transform: scale(1.02);
-      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4), 
-                  inset 0 -5px 10px rgba(0, 0, 0, 0.1),
-                  0 0 40px rgba(173, 216, 230, 0.6);
-    }
-    
-    .button:active {
-      transform: scale(0.95);
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2), 
-                  inset 0 -2px 5px rgba(0, 0, 0, 0.1);
-    }
-    
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 36px;
-      }
-      
-      .button {
-        width: 250px;
-        height: 250px;
-        font-size: 24px;
-      }
-      
-      .logo img {
-        width: 120px;
-      }
-    }
-    
-    @media (max-width: 400px) {
-      h1 {
-        font-size: 28px;
-      }
-      
-      .button {
-        width: 200px;
-        height: 200px;
-        font-size: 20px;
-      }
-      
-      .logo img {
-        width: 100px;
-      }
-    }
-    
-    .confetti {
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      border-radius: 2px;
-      opacity: 0;
-      animation: fall 4s ease-out forwards;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maldives National Defence Force - Air Corps</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .background {
+            background-image: url('background.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            transition: filter 1s ease;
+        }
+
+        .background.fade {
+            filter: brightness(0.3) blur(5px);
+        }
+
+        .logo-button {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            top: -180px;
+            z-index: 10;
+            overflow: hidden; /* Important for shine effect */
+            animation: breathing 4s ease-in-out infinite;
+        }
+
+        /* Breathing animation */
+        @keyframes breathing {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .logo-button:active {
+            animation: none;
+            transform: scale(0.95);
+        }
+
+        .logo-image {
+            width: 100%;
+            height: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Shine effect */
+        .logo-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 4s infinite;
+            z-index: 2;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) rotate(30deg);
+            }
+            20%, 100% {
+                transform: translateX(100%) rotate(30deg);
+            }
+        }
+
+        .thank-you {
+            color: #FFD700;
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 200;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+        }
+
+        .thank-you.visible {
+            opacity: 1;
+        }
+
+        .date {
+            color: #FFD700;
+            position: fixed;
+            bottom: 20px;
+            font-size: 18px;
+            z-index: 10;
+        }
+
+        .flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 999;
+            transition: opacity 0.1s ease;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
+    </style>
 </head>
 <body>
-  <div class="heading">
-    <h1>AIR CORPS ANNIVERSARY</h1>
-  </div>
-  
-  <div class="logo">
-    <img src="zxc.png" alt="Air Corps Logo">
-  </div>
-  
-  <div class="button-container">
-    <button class="button" id="revealButton">REVEAL</button>
-  </div>
-  
-  <script>
-    document.getElementById('revealButton').addEventListener('click', function() {
-      // Create confetti effect
-      createConfetti();
-      
-      // Change button appearance after click
-      this.disabled = true;
-      this.textContent = "REVEALED!";
-      this.style.backgroundColor = "#88b8c6";
-    });
-    
-    function createConfetti() {
-      const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF', '#FFFFFF', '#FFA500'];
-      const confettiCount = 250;
-      
-      for (let i = 0; i < confettiCount; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
+    <div class="flash" id="flash"></div>
+    <canvas id="confetti-canvas"></canvas>
+    <div class="background" id="background">
+        <button class="logo-button" id="logo-button" onclick="activateEffects()">
+            <img src="zxc.png" alt="Maldives Air Corps Logo" class="logo-image">
+        </button>
+        <div class="date">SATURDAY, MARCH 15, 2025.</div>
+    </div>
+    <div class="thank-you" id="thank-you">Thank you</div>
+
+    <script>
+        // Confetti setup
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
         
-        // Random position, color, size, and delay
-        confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.width = (Math.random() * 10 + 5) + 'px';
-        confetti.style.height = (Math.random() * 10 + 5) + 'px';
-        confetti.style.animationDelay = Math.random() * 2 + 's';
-        confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-        
-        document.body.appendChild(confetti);
-        
-        // Remove confetti elements after animation
-        setTimeout(() => {
-          confetti.remove();
-        }, 6000);
-      }
-    }
-    
-    // Add falling animation for confetti
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes fall {
-        0% {
-          top: -20px;
-          opacity: 1;
-          transform: translateX(0) rotate(0deg);
+        // Resize canvas when window size changes
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Confetti particles
+        let confetti = [];
+        const colors = ['#FFD700', '#00BFFF', '#FF4500', '#32CD32', '#FF1493', '#FFFF00', '#00FF00'];
+
+        function createConfetti() {
+            for (let i = 0; i < 200; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 10 + 5,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speed: Math.random() * 5 + 2,
+                    angle: Math.random() * Math.PI * 2,
+                    rotation: Math.random() * 0.2 - 0.1,
+                    rotationSpeed: Math.random() * 0.01 - 0.005
+                });
+            }
         }
-        100% {
-          top: 100vh;
-          opacity: 0.3;
-          transform: translateX(${Math.random() > 0.5 ? '+' : '-'}${Math.random() * 150}px) rotate(${Math.random() * 360}deg);
+
+        function drawConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            confetti.forEach((particle, index) => {
+                ctx.save();
+                ctx.translate(particle.x, particle.y);
+                ctx.rotate(particle.angle);
+                ctx.fillStyle = particle.color;
+                ctx.fillRect(-particle.size / 2, -particle.size / 2, particle.size, particle.size);
+                ctx.restore();
+                
+                // Update position
+                particle.y += particle.speed;
+                particle.angle += particle.rotationSpeed;
+                
+                // Remove particles that fall off screen
+                if (particle.y > canvas.height) {
+                    confetti.splice(index, 1);
+                }
+            });
+            
+            // Stop animation when all confetti has fallen
+            if (confetti.length > 0) {
+                requestAnimationFrame(drawConfetti);
+            }
         }
-      }
-    `;
-    document.head.appendChild(style);
-  </script>
+
+        function flashScreen() {
+            const flash = document.getElementById('flash');
+            flash.style.opacity = '0.8';
+            
+            setTimeout(() => {
+                flash.style.opacity = '0';
+            }, 100);
+        }
+
+        function fadeBackground() {
+            const background = document.getElementById('background');
+            background.classList.add('fade');
+        }
+
+        function showThankYou() {
+            const thankYou = document.getElementById('thank-you');
+            thankYou.classList.add('visible');
+            
+            // Hide button after click
+            const logoButton = document.getElementById('logo-button');
+            logoButton.style.display = 'none';
+        }
+
+        function activateEffects() {
+            flashScreen();
+            fadeBackground();
+            createConfetti();
+            drawConfetti();
+            showThankYou();
+        }
+    </script>
 </body>
 </html>

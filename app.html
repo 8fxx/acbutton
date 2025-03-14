@@ -34,8 +34,9 @@
         }
 
         .logo-button {
-            background: transparent;
-            border: none;
+            background: rgba(255, 255, 255, 0.15);  /* Slight white transparent background */
+            border: 3px solid #FFD700;
+            border-radius: 50%;
             cursor: pointer;
             width: 300px;
             height: 300px;
@@ -43,32 +44,49 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            top: -180px;
+            top: -280px;
             z-index: 10;
             overflow: hidden; /* Important for shine effect */
             animation: breathing 4s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 
+                        inset 0 0 15px rgba(70, 56, 56, 0.2);
+            transition: all 0.3s ease;
         }
 
         /* Breathing animation */
         @keyframes breathing {
             0%, 100% {
                 transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.5), 
+                           inset 0 0 15px rgba(255, 255, 255, 0.2);
             }
             50% {
                 transform: scale(1.05);
+                box-shadow: 0 0 30px rgba(255, 215, 0, 0.7), 
+                           inset 0 0 25px rgba(255, 255, 255, 0.3);
             }
+        }
+
+        .logo-button:hover {
+            background: rgba(255, 255, 255, 0.25);  /* Slightly more white on hover */
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 
+                       inset 0 0 25px rgba(255, 255, 255, 0.4);
         }
 
         .logo-button:active {
             animation: none;
             transform: scale(0.95);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.4), 
+                       inset 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
         .logo-image {
-            width: 100%;
+            width: 85%;
             height: auto;
             position: relative;
             z-index: 1;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.7));
+            opacity: 0.95;  /* Very slightly transparent logo */
         }
 
         /* Shine effect */
@@ -148,6 +166,11 @@
             pointer-events: none;
             z-index: 100;
         }
+        
+        /* Audio controls styling */
+        .audio-controls {
+            display: none; /* Hide audio controls */
+        }
     </style>
 </head>
 <body>
@@ -157,11 +180,21 @@
         <button class="logo-button" id="logo-button" onclick="activateEffects()">
             <img src="zxc.png" alt="Maldives Air Corps Logo" class="logo-image">
         </button>
-       
     </div>
     <div class="thank-you" id="thank-you">Thank you Sir</div>
+    
+    <!-- Add audio element -->
+    <audio id="click-sound" class="audio-controls">
+        <!-- You'll need to replace this with your actual music file -->
+        <source src="click-sound.mp3" type="audio/mpeg">
+        <source src="click-sound.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
 
     <script>
+        // Preload audio
+        const clickSound = document.getElementById('click-sound');
+        
         // Confetti setup
         const canvas = document.getElementById('confetti-canvas');
         const ctx = canvas.getContext('2d');
@@ -242,14 +275,38 @@
             const logoButton = document.getElementById('logo-button');
             logoButton.style.display = 'none';
         }
+        
+        function playSound() {
+            // Reset the audio to the beginning (in case it was played before)
+            clickSound.currentTime = 0;
+            
+            // Play the sound
+            // We use a promise and catch any errors to handle autoplay restrictions in some browsers
+            const playPromise = clickSound.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Audio play was prevented: ", error);
+                    // You could show a "Click to enable sound" button here if needed
+                });
+            }
+        }
 
         function activateEffects() {
-            flashScreen();
-            fadeBackground();
-            createConfetti();
-            drawConfetti();
-            showThankYou();
+            playSound();       // Play the sound
+            flashScreen();     // Flash effect
+            fadeBackground();  // Fade background
+            createConfetti();  // Create confetti
+            drawConfetti();    // Draw confetti
+            showThankYou();    // Show thank you message
         }
+        
+        // Enable sound on first user interaction with the page
+        // This helps with browsers that require user interaction before playing audio
+        document.addEventListener('click', function() {
+            // Load the audio (but don't play it)
+            clickSound.load();
+        }, { once: true });
     </script>
 </body>
 </html>
